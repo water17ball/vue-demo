@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1 @click="add">{{ msg }}</h1>
+
+    <el-button v-on:click="getConfig">默认按钮,点击按钮后后台输出请求数据</el-button>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -103,10 +105,37 @@
 </template>
 
 <script>
+import {queryConfig, queryRateConfigEntLists} from '@/api/index.js'
 export default {
   name: "HelloWorld",
   props: {
     msg: String
+  },
+  created(){
+    this.add()
+  },
+    methods:{
+
+    getConfig(){
+        queryConfig().then(res =>
+        {
+            console.log(res);
+        })
+    },
+
+    add() {
+        let parms = {
+            id:"",
+            name :""
+        }
+        let name = {
+            id:"",
+            name :""
+        }
+        queryRateConfigEntLists(parms, name).then(res => {
+            console.log(res)
+        })
+    }
   }
 };
 </script>
